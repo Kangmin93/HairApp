@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements HairCardAdapter.O
                 + " (img VARCHAR(100), salon VARCHAR(20), name VARCHAR(20), price VARCHAR(20), date VARCHAR(30), comment VARCHAR(100) );");
 
         //SELECT문을 사용하여 테이블에 있는 데이터를 가져옵니다..
-        Cursor c = ReadDB.rawQuery("SELECT * FROM " + tableName, null);
+        Cursor c = ReadDB.rawQuery("SELECT * FROM " + tableName+" ORDER BY date desc", null);
         String imgTest = null;
         String hairShop = null;
         String designer = null;
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements HairCardAdapter.O
         ReadDB.close();
 
         init();
-        String str_path = null;
 
 
         btnEnroll.setOnClickListener(new View.OnClickListener() {
@@ -82,11 +81,11 @@ public class MainActivity extends AppCompatActivity implements HairCardAdapter.O
         rcc_album = (RecyclerView) findViewById(R.id.rcc_album);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, 1);
         rcc_album.setLayoutManager(mLayoutManager);
-//        rcc_album.addItemDecoration(new ItemDecoration(this));
         mHairCardAdapter = new HairCardAdapter(mContext, getHairCardList());
         mHairCardAdapter.setOnItemClickListener(this);
 
         rcc_album.setAdapter(mHairCardAdapter);
+
     }
     @Override
     public void onItemClick(View view, HairCardVO hairCardVO) {
@@ -94,18 +93,11 @@ public class MainActivity extends AppCompatActivity implements HairCardAdapter.O
     }
     private ArrayList<HairCardVO> getHairCardList(){
         ArrayList<HairCardVO> listHairCard = new ArrayList<>();
-//        String hairShop, String designer, int pirce, String date, String comment
-        listHairCard.add(new HairCardVO("인동미용실", "신혜진", 15000,"2019.12.12","뿅뿅뿅~"));
-        listHairCard.add(new HairCardVO("인의동미용실", "이채은", 20000,"2019.12.10","할라할라~"));
         if(list !=null){
             for(HairCardVO vo : list){
                 listHairCard.add(vo);
             }
         }
-//        if(getIntent().getStringArrayExtra("itemInfo")!=null){
-//            String[] item = getIntent().getStringArrayExtra("itemInfo");
-//            listHairCard.add(new HairCardVO(item[0], item[1], item[2], Integer.parseInt(item[3]),item[4],item[5]));
-//        }
         return listHairCard;
     }
 }

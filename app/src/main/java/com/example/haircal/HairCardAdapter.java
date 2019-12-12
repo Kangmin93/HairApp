@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHo
     private Context mContext;
     private ArrayList<HairCardVO> listHairCard;
     public OnItemClickListener mOnItemClickListener = null;
+
 
     public interface OnItemClickListener {
         void onItemClick(View view, HairCardVO hairCardVO);
@@ -61,6 +63,7 @@ public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHo
                 mOnItemClickListener.onItemClick(view,hairCardVO);
             }
         });
+
     }
 
     @Override
@@ -71,7 +74,6 @@ public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout layout_haircard_panel;
         private TextView txtDate;
-        private Button btnModify;
         private ImageView imgHair;
         private TextView txtHairShop;
         private TextView txtDesigner;
@@ -83,7 +85,6 @@ public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHo
 
             layout_haircard_panel = itemView.findViewById(R.id.layout_haircard_panel);
             txtDate = itemView.findViewById(R.id.txtDate);
-            btnModify = itemView.findViewById(R.id.btnModify);
             imgHair = itemView.findViewById(R.id.imgHair);
             txtHairShop = itemView.findViewById(R.id.txtHairShop);
             txtDesigner = itemView.findViewById(R.id.txtDesigner);
