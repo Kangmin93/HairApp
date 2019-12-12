@@ -10,8 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +27,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -37,6 +42,14 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        final TextView txt_today = findViewById(R.id.txt_today);
+        final EditText edt_salon = findViewById(R.id.edt_salon);
+        final EditText edt_designer = findViewById(R.id.edt_designer);
+        final EditText edt_price = findViewById(R.id.edt_price);
+        final EditText edt_comment = findViewById(R.id.edt_comment);
+        Date currentTime = Calendar.getInstance().getTime();
+        String date_text = new SimpleDateFormat("yyyy.MM.dd (EE)", Locale.getDefault()).format(currentTime);
+        txt_today.setText(date_text);
 
         // 권한 체크
         TedPermission.with(getApplicationContext())
@@ -47,6 +60,29 @@ public class CameraActivity extends AppCompatActivity {
                 .check();
 
 
+        findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String str_date, str_salon, str_designer, str_price, str_comment;
+                str_salon = edt_salon.getText().toString();
+                str_designer = edt_designer.getText().toString();
+                str_price = edt_price.getText().toString();
+                str_date = txt_today.getText().toString();
+                str_comment = edt_comment.getText().toString();
+                if(str_salon.length()==0||str_designer.length()==0||str_comment.length()==0||str_price.length()==0){
+                    Toast.makeText(getApplicationContext(),"입력 덜했다!!!!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent i = new Intent(CameraActivity.this,MainActivity.class);
+
+                    String[] itemInfo = {imageFilePath,str_salon,str_designer,str_price,str_date,str_comment};
+                    i.putExtra("itemInfo", itemInfo);
+                    startActivity(i);
+                    finish();
+                }
+
+
+            }
+        });
 
         findViewById(R.id.btn_capture).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +119,11 @@ public class CameraActivity extends AppCompatActivity {
                 storageDir
         );
         imageFilePath = image.getAbsolutePath();
+        Log.w(this.getClass().getName(),imageFilePath);
+        TextView tv = findViewById(R.id.txt_path);
+        tv.setText(imageFilePath);
+
+
         return image;
     }
 

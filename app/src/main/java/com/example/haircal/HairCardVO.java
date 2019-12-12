@@ -4,12 +4,31 @@ import java.util.Arrays;
 
 public class HairCardVO {
     private String[] img;
+    private String imgTest;
+
     private String hairShop;
+
     private String designer;
     private int pirce;
     private String date;
     private String comment;
 
+    public String getImgTest() {
+        return imgTest;
+    }
+
+    public void setImgTest(String imgTest) {
+        this.imgTest = imgTest;
+    }
+
+    public HairCardVO(String imgTest, String hairShop, String designer, int pirce, String date, String comment) {
+        this.imgTest = imgTest;
+        this.hairShop = hairShop;
+        this.designer = designer;
+        this.pirce = pirce;
+        this.date = date;
+        this.comment = comment;
+    }
 
     public HairCardVO() {
     }

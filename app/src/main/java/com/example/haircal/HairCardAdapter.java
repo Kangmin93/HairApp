@@ -1,6 +1,7 @@
 package com.example.haircal;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -44,17 +44,12 @@ public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final HairCardVO hairCardVO = listHairCard.get(position);
-        /*
-        private LinearLayout layout_haircard_panel;
-        private TextView txtDate;
-        private Button btnModify;
-        private ImageView imgHair;
-        private TextView txtHairShop;
-        private TextView txtDesigner;
-        private TextView txtPrice;
-        private TextView txtComment;
-         */
-        holder.imgHair.setImageResource(R.drawable.aoa);
+        if(hairCardVO.getImgTest()!=null){
+            Uri uri = Uri.parse("file:///"+hairCardVO.getImgTest());
+            holder.imgHair.setImageURI(uri);
+        }else{
+            holder.imgHair.setImageResource(R.drawable.aoa);
+        }
         holder.txtDate.setText(hairCardVO.getDate());
         holder.txtHairShop.setText(hairCardVO.getHairShop());
         holder.txtDesigner.setText(hairCardVO.getDesigner());

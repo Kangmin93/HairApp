@@ -11,19 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HairCardAdapter.OnItemClickListener{
     private Context mContext;
     private RecyclerView rcc_album;
     private HairCardAdapter mHairCardAdapter;
-    private AlbumAdapter mAlbumAdapter;
     private Button btnEnroll;
 
     @Override
@@ -33,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements HairCardAdapter.O
         btnEnroll = findViewById(R.id.btnEnroll);
         mContext = this;
         init();
+        String str_path = null;
+
         btnEnroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements HairCardAdapter.O
         mHairCardAdapter = new HairCardAdapter(mContext, getHairCardList());
         mHairCardAdapter.setOnItemClickListener(this);
 
-//        mAlbumAdapter = new AlbumAdapter(mContext, getAlbumList());
-//        mAlbumAdapter.setOnItemClickListener(this);
         rcc_album.setAdapter(mHairCardAdapter);
     }
     @Override
@@ -64,28 +57,10 @@ public class MainActivity extends AppCompatActivity implements HairCardAdapter.O
 //        String hairShop, String designer, int pirce, String date, String comment
         listHairCard.add(new HairCardVO("인동미용실", "신혜진", 15000,"2019.12.12","뿅뿅뿅~"));
         listHairCard.add(new HairCardVO("인의동미용실", "이채은", 20000,"2019.12.10","할라할라~"));
-        return listHairCard;
-    }
-    private ArrayList<AlbumVO> getAlbumList() {
-        ArrayList<AlbumVO> list_album = new ArrayList<>();
-        Gson gson = new Gson();
-        try {
-            InputStream is = getAssets().open("album.json");
-            byte[] buffer = new byte[is.available()];
-            is.read(buffer);
-            is.close();
-            String json = new String(buffer, "UTF-8");
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray("album");
-            int index = 0;
-            while (index < jsonArray.length()) {
-                AlbumVO albumVO = gson.fromJson(jsonArray.get(index).toString(), AlbumVO.class);
-                list_album.add(albumVO);
-                index++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(getIntent().getStringArrayExtra("itemInfo")!=null){
+            String[] item = getIntent().getStringArrayExtra("itemInfo");
+            listHairCard.add(new HairCardVO(item[0], item[1], item[2], Integer.parseInt(item[3]),item[4],item[5]));
         }
-        return list_album;
+        return listHairCard;
     }
 }

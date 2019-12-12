@@ -5,31 +5,159 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:weightSum="2">
+
+
+    <ImageView
+        android:id="@+id/iv_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <ImageView
-            android:id="@+id/iv_result"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="10"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:weightSum="5"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_capture"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="촬영" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
 
-    </LinearLayout>
+            </LinearLayout>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_save"
+                android:text="저장"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8.5"
+            android:gravity="center|top"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_capture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="촬영" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="날짜" />
+
+                <TextView
+                    android:id="@+id/txt_today"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:text="오늘 날짜 입력" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="미용실" />
+
+                <EditText
+                    android:id="@+id/edt_salon"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:hint="미용실 입력 해줘~~" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="디자이너" />
+
+                <EditText
+                    android:id="@+id/edt_designer"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:hint="디자이너 입력 해줘~~" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="가격" />
+
+                <EditText
+                    android:id="@+id/edt_price"
+                    android:layout_width="200dp"
+                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:hint="가격 입력 해줘~~" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="코멘트" />
+
+
+                <EditText
+                    android:id="@+id/edt_comment"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:hint="코멘트 입력 해줘~~" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txt_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경로" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
