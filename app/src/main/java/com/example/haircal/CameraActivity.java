@@ -31,12 +31,34 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
+
 public class CameraActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 672;
     private String imageFilePath;
     private Uri photoUri;
 
+    private final String dbName = "hair";
+    private  final String tableName = "person";
+
+    ArrayList<HashMap<String, String>> personList;
+    ListView list;
+    private static final String TAG_NAME = "name";
+    private static final String TAG_PHONE ="phone";
+
+    SQLiteDatabase sampleDB = null;
+    ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +94,29 @@ public class CameraActivity extends AppCompatActivity {
                 if(str_salon.length()==0||str_designer.length()==0||str_comment.length()==0||str_price.length()==0){
                     Toast.makeText(getApplicationContext(),"입력 덜했다!!!!", Toast.LENGTH_SHORT).show();
                 }else{
+                    try {
+
+
+                        sampleDB = openOrCreateDatabase(dbName, MODE_PRIVATE, null);
+
+                        //테이블이 존재하지 않으면 새로 생성합니다.
+                        sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName
+                                + " (img VARCHAR(100), salon VARCHAR(20), name VARCHAR(20), price VARCHAR(20), date VARCHAR(30), comment VARCHAR(100) );");
+
+                        //새로운 데이터를 테이블에 집어넣습니다..
+                        sampleDB.execSQL("INSERT INTO " + tableName
+                                + " (img, salon, name, price, date, comment)  Values ('" + imageFilePath + "', '" + str_salon+"', '" +str_designer+"', '" + str_price+"', '" + str_date+"', '" + str_comment+"');");
+
+                        sampleDB.close();
+
+
+                    }catch (SQLiteException se) {
+                        Toast.makeText(getApplicationContext(),  se.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("", se.getMessage());
+
+
+                    }
+
                     Intent i = new Intent(CameraActivity.this,MainActivity.class);
 
                     String[] itemInfo = {imageFilePath,str_salon,str_designer,str_price,str_date,str_comment};
@@ -93,7 +138,7 @@ public class CameraActivity extends AppCompatActivity {
                     try {
                         photoFile = createImageFile();
                     }catch (IOException e){
-                        
+
                     }
                     if (photoFile != null) {
                         photoUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName(), photoFile);
