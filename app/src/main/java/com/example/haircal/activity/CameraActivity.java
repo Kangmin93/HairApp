@@ -1,4 +1,4 @@
-package com.example.haircal;
+package com.example.haircal.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.example.haircal.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -31,17 +32,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -121,6 +117,7 @@ public class CameraActivity extends AppCompatActivity {
 
                     String[] itemInfo = {imageFilePath,str_salon,str_designer,str_price,str_date,str_comment};
                     i.putExtra("itemInfo", itemInfo);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     finish();
                 }
@@ -165,8 +162,6 @@ public class CameraActivity extends AppCompatActivity {
         );
         imageFilePath = image.getAbsolutePath();
         Log.w(this.getClass().getName(),imageFilePath);
-        TextView tv = findViewById(R.id.txt_path);
-        tv.setText(imageFilePath);
 
 
         return image;

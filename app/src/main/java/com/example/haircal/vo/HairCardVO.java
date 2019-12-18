@@ -1,8 +1,9 @@
-package com.example.haircal;
+package com.example.haircal.vo;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class HairCardVO {
+public class HairCardVO implements Serializable {
     private String[] img;
     private String imgTest;
 

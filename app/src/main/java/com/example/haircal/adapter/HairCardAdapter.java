@@ -1,6 +1,7 @@
-package com.example.haircal;
+package com.example.haircal.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.haircal.R;
+import com.example.haircal.activity.ImageActivity;
+import com.example.haircal.vo.HairCardVO;
+
 import java.util.ArrayList;
 
 public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHolder>{
@@ -22,12 +27,23 @@ public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHo
     private Context mContext;
     private ArrayList<HairCardVO> listHairCard;
     public OnItemClickListener mOnItemClickListener = null;
+    public OnItemLongClickListener mOnItemLongClickListener = null;
 
+    public interface OnItemLongClickListener {
+        void onItemLongClick(View view, HairCardVO hairCardVO);
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener listener){
+        mOnItemLongClickListener = listener;
+
+    }
 
     public interface OnItemClickListener {
         void onItemClick(View view, HairCardVO hairCardVO);
     }
     public void setOnItemClickListener(OnItemClickListener listener) {
+
+
         mOnItemClickListener = listener;
     }
 
@@ -61,6 +77,13 @@ public class HairCardAdapter extends RecyclerView.Adapter<HairCardAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 mOnItemClickListener.onItemClick(view,hairCardVO);
+            }
+        });
+        holder.layout_haircard_panel.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mOnItemLongClickListener.onItemLongClick(v,hairCardVO);
+                return true;
             }
         });
 
